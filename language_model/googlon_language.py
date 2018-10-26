@@ -1,65 +1,63 @@
-from helper_functions.constants import (googlon_to_english_dict, googlon_to_numebrs_dict)
+from helper_functions.utils import *
 
 
-def is_foo_letter(character):
-    return character in ['u', 'd', 'x', 's', 'm', 'p', 'f']
+class GooglonLanguage:
+    def __init__(self, text: str):
+        self.text = text
+        self.text_tokens = self.text.split()
+        self.number_of_prepositions = 0
+        self.number_of_verbs = 0
+        self.number_of_subjunctive_form_verbs = 0
+        self.number_of_distinct_pretty_numbers = 0
+        self.ordered_vocabulary = []
+        self.pretty_numbers = []
 
+    def annotate_tokens(self):
+        for token in self.text_tokens:
+            if is_preposition(token):
+                self.number_of_prepositions += 1
 
-def is_bar_letter(character):
-    return not is_foo_letter(character)
+            if is_verb(token):
+                self.number_of_verbs += 1
 
+            if is_verb_in_subjunctive_form(token):
+                self.number_of_subjunctive_form_verbs += 1
 
-def is_preposition(word: str):
-    """
-    If the word has a foo letter at the end, doesn't have u inside, and is a 6-letter word, it's a preposition.
-    If any of these three rules was broken, then it's not!
-    :param word: A string of an English letters plain text.
-    :return: is a preposition or not!
-    """
-    if len(word) != 6 or 'u' in word or is_bar_letter(word[-1]):
-        return False
-    return True
+            if is_pretty_number(token):
+                self.pretty_numbers.append(word_to_number(token))
 
+            self.number_of_distinct_pretty_numbers = len(set(self.pretty_numbers))
+            self.ordered_vocabulary = googlon_sort(words=list(set(self.text_tokens)))
 
-def is_verb(word: str):
-    """
-    If the word ends with a bar letter, and has more than 5 letters, then it's a verb
-    :param word: A string of an English letters plain text.
-    :return: is a verb or not!
-    """
-    if len(word) < 6 or is_foo_letter(word[-1]):
-        return False
-    return True
+    def get_number_of_prepositions(self):
+        return self.number_of_prepositions
 
+    def get_number_of_verbs(self):
+        return self.number_of_verbs
 
-def is_verb_in_subjunctive_form(word: str):
-    return is_verb(word) and is_bar_letter(word[0])
+    def get_number_of_subjunctive_form_verbs(self):
+        return self.number_of_subjunctive_form_verbs
 
+    def get_ordered_distinct_words(self):
+        return self.ordered_vocabulary
 
-def sorting_custom_key(word):
-    return "".join([googlon_to_english_dict[char] for char in word])
+    def get_number_of_distinct_pretty_numbers(self):
+        return self.number_of_distinct_pretty_numbers
 
+    def update_language_model(self, text):
+        self.text = text
+        self.text_tokens = self.text.split()
+        self.number_of_prepositions = 0
+        self.number_of_verbs = 0
+        self.number_of_subjunctive_form_verbs = 0
+        self.number_of_distinct_pretty_numbers = 0
+        self.ordered_vocabulary = []
+        self.pretty_numbers = []
+        self.annotate_tokens()
 
-def googlon_sort(words: list()):
-    """
-    Sort list of words in lexicographical order based on this characters emplacement:
-    (s, x, o, c, q, n, m, w, p, f, y, h, e, l, j, r, d, g, u, i)
-    :param words: list of strings
-    :return: the words sorted lexicographically
-    """
-    return sorted(words, key=sorting_custom_key)
-
-
-def word_to_number(word: str):
-    number = 0
-    base = 1
-    for character in word:
-        number += googlon_to_numebrs_dict[character]*base
-        base *= 20
-
-    return number
-
-
-def is_pretty_number(number):
-    return number >= 81827 and number % 3 == 0
-
+    def get_analytics(self):
+        print("1) There are {} prepositions in the text".format(self.get_number_of_prepositions()))
+        print("2) There are {} verbs in the text".format(self.get_number_of_verbs()))
+        print("3) There are {} subjunctive verbs in the text".format(self.get_number_of_subjunctive_form_verbs()))
+        print("4) Vocabulary list:{}".format(self.get_ordered_distinct_words()))
+        print("5) There are {} distinct pretty numbers in the text".format(self.get_number_of_distinct_pretty_numbers()))
