@@ -21,7 +21,8 @@ googlon_to_english_dict = {
     "i": "t",
 }
 
-googlon_to_numebrs_dict = {
+
+googlon_to_numbers_dict = {
     "s": 0,
     "x": 1,
     "o": 2,
