@@ -1,5 +1,19 @@
 # The Googlon Language
 
+## How to run
+### Run the Interactive testing
+Run interactive terminal to be able to test new cases which are not mentioned in the ```The-Googlon-Language/test/test_cases.json``` file.
+
+```bash
+python3 test/interactive_testing.py
+```
+
+### Run the validator
+Run the validator to test the given test cases in the ```The-Googlon-Language/test/test_cases.json``` file.
+
+```bash
+python3 test/validator.py
+```
 ## Language Characteristics
 
 ### Letter Classification
