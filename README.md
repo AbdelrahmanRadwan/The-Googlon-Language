@@ -9,7 +9,8 @@ python3 test/interactive_testing.py
 ```
 
 ### Run the validator
-Run the validator to test the given test cases in the ```The-Googlon-Language/test/test_cases.json``` file.
+Run the validator to test the given test cases in the ```The-Googlon-Language/test/test_cases.json``` file, and writes the results to
+```The-Googlon-Language/test/test_results/results.json```
 
 ```bash
 python3 test/validator.py
