@@ -55,9 +55,18 @@ class GooglonLanguage:
         self.pretty_numbers = []
         self.annotate_tokens()
 
-    def get_analytics(self):
+    def print_analytics(self):
         print("1) There are {} prepositions in the text".format(self.get_number_of_prepositions()))
         print("2) There are {} verbs in the text".format(self.get_number_of_verbs()))
         print("3) There are {} subjunctive verbs in the text".format(self.get_number_of_subjunctive_form_verbs()))
         print("4) Vocabulary list:{}".format(self.get_ordered_distinct_words()))
         print("5) There are {} distinct pretty numbers in the text".format(self.get_number_of_distinct_pretty_numbers()))
+
+    def get_analytics(self):
+        analytics = dict()
+        analytics["prepositions"] = self.get_number_of_prepositions()
+        analytics["verbs"] = self.get_number_of_verbs()
+        analytics["subjunctive verbs"] = self.get_number_of_subjunctive_form_verbs()
+        analytics["Vocabulary list"] = self.get_ordered_distinct_words()
+        analytics["distinct pretty numbers"] = self.get_number_of_distinct_pretty_numbers()
+        return analytics
